@@ -38,32 +38,15 @@ const Cards = () => {
     console.log(viem)
     return (
         <div>
-             <div className='flex flex-wrap gap-3'>
-
-           
+             <div className='flex flex-wrap gap-7 justify-center box-content border-4 ' >
          {
-            viem.map((item)=> (
-
-               
-                    <div>
+            viem.slice(0,8).map((item)=> (
+                    <div >
                          <Card item = {item}/>  
                     </div>
-                   
-              
-                        
-                
-
             ))
-
-
          } </div>
 
-           
-
-
-
-
-         
             <div className='flex justify-center text-4xl  mt-6'>
                 <span> last </span>
                 {page}
