@@ -1,20 +1,15 @@
 
 import './App.css'
-import Card from './components/card/Card'
+import Cards from './components/card/Cards'
 import Header from './components/head'
 import Navbar from './components/navbar/Navbar'
 
 function App() {
-  
-
   return (
     <>
-   
-    
-      <Navbar/>
-      <Header/>
-      <Card/>
-   
+      <Navbar />
+      <Header />
+      <Cards />
     </>
   )
 }
