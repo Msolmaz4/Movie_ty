@@ -1,5 +1,7 @@
 import { FunctionComponent } from "react"
 import { Movie } from "../../type"
+import {Link} from 'react-router-dom'
+
 
 interface iProps {
    item :Movie
@@ -8,6 +10,8 @@ interface iProps {
 const Card :FunctionComponent<iProps> = (props) => {
     const { item } = props
     console.log(item.title ,'data')
+
+ 
   return (
    
     
@@ -21,7 +25,9 @@ const Card :FunctionComponent<iProps> = (props) => {
                         <p className="text-gray-600">{item.overview.slice(0,40)}...</p>
                     </div>
                     <div className="p-4">
-                        <a href="#" className="text-indigo-600 hover:underline">Buchen</a>
+                    <Link to={`/${item.id}`} className="text-indigo-600 hover:underline">
+            Buchen
+          </Link>
                     </div>
                 </div>
     </div>

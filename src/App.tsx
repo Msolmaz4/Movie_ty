@@ -1,15 +1,21 @@
 
 import './App.css'
-import Cards from './components/card/Cards'
-import Header from './components/head'
-import Navbar from './components/navbar/Navbar'
+import Home from './Home/Home'
+import { BrowserRouter ,Routes ,Route } from 'react-router-dom'
+import Page from './components/detail/Page'
 
 function App() {
   return (
     <>
-      <Navbar />
-      <Header />
-      <Cards />
+<BrowserRouter>
+     
+      <Routes>
+        <Route path='/' element={<Home/>}/> 
+        <Route path='/:id' element={<Page/>}/> 
+        
+      </Routes>
+</BrowserRouter>
+     
     </>
   )
 }
