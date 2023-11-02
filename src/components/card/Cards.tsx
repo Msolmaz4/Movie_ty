@@ -7,8 +7,8 @@ import Card from './Card';
 
 const Cards = () => {
     const [viem, setViem] = useState<Movie[]>([])
-    const [page, setPage] = useState(1)
-   
+    const [page, setPage] = useState<number>(1)
+    const itemInt = 8
 
     useEffect(() => {
         const options = {
@@ -26,7 +26,7 @@ const Cards = () => {
             .then(function (response) {
                 console.log(response.data);
                 setViem(response.data.results)
-                
+
             })
             .catch(function (error) {
                 console.error(error);
@@ -34,23 +34,34 @@ const Cards = () => {
 
     }, [page])
 
-    console.log({viem})
+    console.log({ viem })
     console.log(viem)
+
+    const inter = () => {
+        setPage(page + 1)
+        console.log(page)
+
+    }
+    const desc = () => {
+        page > 1 ? setPage(page - 1) : 1
+
+    }
+
     return (
         <div>
-             <div className='flex flex-wrap gap-7 justify-center box-content border-4 ' >
-         {
-            viem.slice(0,8).map((item)=> (
-                    <div >
-                         <Card item = {item}/>  
-                    </div>
-            ))
-         } </div>
+            <div className='flex flex-wrap gap-7 justify-center box-content border-4 ' >
+                {
+                    viem.slice((page - 1) * itemInt, page * itemInt).map((item) => (
+                        <div >
+                            <Card item={item} />
+                        </div>
+                    ))
+                } </div>
 
             <div className='flex justify-center text-4xl  mt-6'>
-                <span> last </span>
+                <span onClick={desc}> Previous </span>
                 {page}
-                <span> go </span>
+                <span onClick={inter} > Next </span>
             </div>
 
         </div>
