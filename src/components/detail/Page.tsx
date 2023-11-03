@@ -68,7 +68,7 @@ const Page = () => {
     return (
         <div> 
         <div className='mt-6 bg-neutral-300'>
-            <div className='grid grid-cols-3 gap-4  h-56 '>
+            <div className='grid grid-cols-6 gap-4  h-56 '>
                 <div >
                     {viem ? (
                         <div className='flex'>
@@ -92,13 +92,13 @@ const Page = () => {
                         <div>Film bulunamadı</div>
                     )}
                 </div>
-                <div className=' flex justify-center items-center '>
-                    <div>
-                        ekran
+                <div className=' flex justify-center items-center  col-start-2 col-span-4'>
+                    <div>  
+                        <img src='/7UJD.gif' style={{width:'500px', height:'200px'}} alt="" />
                     </div>
                 </div>
                 <div className=''>
-                    <div className='border-dashed border-2 border-sky-500 h-44 m-3 rounded-lg'>
+                    <div className='border-dashed border-2 border-sky-500 h-44 m-3 rounded-lg flex flex-col justify-center items-center' >
                         <div>koltuk numarasi</div>
                         <div>aciklama</div>
                         <div className="border-dotted border-b-2 border-gray-400"></div>
