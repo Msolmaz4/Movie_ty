@@ -87,7 +87,7 @@ const Page = () => {
                                 <h2>{viem.title}</h2>
                                 <p>adres</p>
                                 <p>tarih</p>
-                                <select name="" id="" onChange={()=>dispatch(change(30))} >
+                                <select name="" id="" onChange={(e)=>dispatch(change(e.target.value))} >
                                     <option value="150"> 150 Tam</option>
                                     <option value="100"> 100 Ogrenci</option>
                                     <option value="120"> 120 Indirimli</option>
