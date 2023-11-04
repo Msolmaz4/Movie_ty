@@ -9,7 +9,7 @@ export const countSlice = createSlice({
 name:'select',
 initialState,
 reducers:{
-    change:(state,action: PayloadAction<string>)=>{
+    change:(state,action: PayloadAction<number>)=>{
         console.log(action.payload)
     }
 }

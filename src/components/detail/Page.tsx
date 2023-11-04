@@ -64,7 +64,7 @@ const Page = () => {
       const numRows: number = 5;
       const seatsPerRow: number = 10;
       const theatreLayout: Seat[][] = createTheatre(numRows, seatsPerRow);
-      console.log(theatreLayout)
+     // console.log(theatreLayout)
      
       const deger = (rowIndex,seatIndex)=>{
          console.log(String.fromCharCode(97 + rowIndex).toUpperCase() + (seatIndex + 1))
@@ -87,7 +87,7 @@ const Page = () => {
                                 <h2>{viem.title}</h2>
                                 <p>adres</p>
                                 <p>tarih</p>
-                                <select name="" id="" onChange={()=>dispatch(change('bir'))} >
+                                <select name="" id="" onChange={()=>dispatch(change(30))} >
                                     <option value="150"> 150 Tam</option>
                                     <option value="100"> 100 Ogrenci</option>
                                     <option value="120"> 120 Indirimli</option>
