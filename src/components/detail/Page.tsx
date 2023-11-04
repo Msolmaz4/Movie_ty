@@ -2,13 +2,19 @@ import { useParams } from 'react-router-dom';
 import { Movie } from '../../type';
 import axios from 'axios';
 import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { change } from '../../store/featur/count';
+import { RootState } from '../../store';
 
  
 const Page = () => {
 
     const { id } = useParams<{ id: string }>()
     const [viem, setViem] = useState<Movie[]>([])
-
+  
+      const dispatch = useDispatch()
+      const selec = useSelector((state: RootState) => state.counter)
+      console.log(selec)
 
 
     useEffect(() => {
@@ -81,10 +87,10 @@ const Page = () => {
                                 <h2>{viem.title}</h2>
                                 <p>adres</p>
                                 <p>tarih</p>
-                                <select name="" id="">
-                                    <option value=""> 150 Tam</option>
-                                    <option value=""> 100 Ogrenci</option>
-                                    <option value=""> 120 Indirimli</option>
+                                <select name="" id="" onChange={()=>dispatch(change('bir'))} >
+                                    <option value="150"> 150 Tam</option>
+                                    <option value="100"> 100 Ogrenci</option>
+                                    <option value="120"> 120 Indirimli</option>
                                 </select>
                             </div>
                         </div>
