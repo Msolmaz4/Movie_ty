@@ -3,7 +3,7 @@ import { Movie } from '../../type';
 import axios from 'axios';
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { change } from '../../store/featur/count';
+import { change ,seatF} from '../../store/featur/count';
 import { RootState } from '../../store';
 
  
@@ -11,10 +11,12 @@ const Page = () => {
 
     const { id } = useParams<{ id: string }>()
     const [viem, setViem] = useState<Movie[]>([])
+    const [isSelected, setIsSelected] = useState(false);
+    const [selectedSeats, setSelectedSeats] = useState<Record<string, boolean>>({});
   
       const dispatch = useDispatch()
-      const selec = useSelector((state: RootState) => state.counter)
-      console.log(selec)
+      const koltuk = useSelector((state: RootState) => state.counter.toplam)
+      console.log(koltuk)
 
 
     useEffect(() => {
@@ -48,9 +50,11 @@ const Page = () => {
         row: number;
         seat: number;
         available: boolean;
+        seatId:string
       }
 
     function createTheatre(numRows: number, seatsPerRow: number): Seat[][] {
+        
         const theatre: Seat[][] = [];
         for (let i = 1; i <= numRows; i++) {
           const row: Seat[] = [];
@@ -64,11 +68,14 @@ const Page = () => {
       const numRows: number = 5;
       const seatsPerRow: number = 10;
       const theatreLayout: Seat[][] = createTheatre(numRows, seatsPerRow);
-     // console.log(theatreLayout)
+      theatreLayout[3][2] = { ...theatreLayout[3][2], available: false };
+      theatreLayout[3][6] = { ...theatreLayout[3][6], available: false };
+      
      
-      const deger = (rowIndex,seatIndex)=>{
-         console.log(String.fromCharCode(97 + rowIndex).toUpperCase() + (seatIndex + 1))
-        }
+    //   const deger = (rowIndex,seatIndex)=>{
+       
+    //      console.log( String.fromCharCode(97 + rowIndex).toUpperCase() + (seatIndex + 1))
+    //  }  //bunu koltukları tıklayınca clg gormek ıcın yaptım
 
 
     return (
@@ -77,7 +84,7 @@ const Page = () => {
             <div className='grid grid-cols-6 gap-4  h-56 '>
                 <div >
                     {viem ? (
-                        <div className='flex'>
+                        <div className='flex ml-10 mt-2'>
                             <div>
                                 <img className="w-full max-h-96 rounded-lg p-1" src={
                                     `https://image.tmdb.org/t/p/w500${viem.poster_path}`
@@ -104,8 +111,15 @@ const Page = () => {
                     </div>
                 </div>
                 <div className=''>
-                    <div className='border-dashed border-2 border-sky-500 h-44 m-3 rounded-lg flex flex-col justify-center items-center' >
-                        <div>koltuk numarasi</div>
+                    <div className='border-dashed border-2 border-sky-500 h-48 m-5 mr-10 rounded-lg flex flex-col justify-center items-center' >
+                        <div> 
+                        {
+        koltuk.map((ert, i) => (
+          <span key={i}>{ert}</span>
+        ))
+      }
+
+                        </div>
                         <div>aciklama</div>
                         <div className="border-dotted border-b-2 border-gray-400"></div>
                         <div>fiyat</div>
@@ -113,11 +127,6 @@ const Page = () => {
                     </div>
                 </div> 
     </div>
-
-
-    
-       
-        
      </div>
      <div className='border-2 border-sky-500  w-full h-14 mt-4 flex justify-between '>
     <div className='w-1/6  flex justify-center'> 
@@ -136,31 +145,39 @@ const Page = () => {
     <div className='w-10 bg-stone-400 rounded-lg'></div>
      <span className='ml-2 mt-3' > Bos </span>
     </div>
-    </div>
-
-
-
-
+</div>
 <div className='justify-center'>
     {
-  theatreLayout.map((row, rowIndex) => (
-    <div key={rowIndex} className="flex justify-center m-6">
+      
+            theatreLayout.map((row, rowIndex) => (
+         <div key={rowIndex} className="flex justify-center m-6">
       {row.map((seat, seatIndex) => (
-        <div  key={seatIndex} className="seat p-5 border-2 border-sky-500 m-1 rounded-lg w-1/12" onClick={()=>deger(rowIndex,seatIndex)}>
+        <div key={seatIndex} className={`seat p-5 border-2 border-sky-500 m-1 ${
+            seat.available
+                ? selectedSeats[`${rowIndex}-${seatIndex}`] ? 'bg-yellow-500' : 'bg-stone-400'
+                : 'bg-red-500'
+        } flex flex-col justify-center items-center rounded-lg w-1/12`} onClick={() => {
+            if (seat.available) {
+                const seatKey = `${rowIndex}-${seatIndex}`;
+                setSelectedSeats((prevSelectedSeats) => ({
+                    ...prevSelectedSeats,
+                    [seatKey]: !prevSelectedSeats[seatKey],
+                }));
+                dispatch(seatF(String.fromCharCode(97 + rowIndex).toUpperCase() + (seatIndex + 1)));
+            }
+        }}>
           {String.fromCharCode(97 + rowIndex).toUpperCase() + (seatIndex + 1)}
         </div>
       ))}
     </div>
   ))
+        
+  
 }
 </div>
-     
-
-         
-
-
-
-
+<div>
+    home
+</div>
     </div>
   )
 }
