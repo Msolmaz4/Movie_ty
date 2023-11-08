@@ -3,9 +3,11 @@ import { useState, useEffect } from 'react'
 import { Movie } from '../../type';
 import Card from './Card';
 
+interface inpProps {
+    inp:string
+}
 
-
-const Cards = ({inp}) => {
+const Cards = ({inp}:inpProps) => {
     const [viem, setViem] = useState<Movie[]>([])
     const [page, setPage] = useState<number>(1)
     const itemInt = 8
