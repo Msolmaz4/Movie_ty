@@ -5,7 +5,7 @@ import Card from './Card';
 
 
 
-const Cards = () => {
+const Cards = ({inp}) => {
     const [viem, setViem] = useState<Movie[]>([])
     const [page, setPage] = useState<number>(1)
     const itemInt = 8
@@ -32,7 +32,7 @@ const Cards = () => {
                 console.error(error);
             });
 
-    }, [page])
+    }, [page,inp])
 
     console.log({ viem })
     console.log(viem)
@@ -51,7 +51,7 @@ const Cards = () => {
         <div>
             <div className='flex flex-wrap gap-7 justify-center box-content border-4 ' >
                 {
-                    viem.slice((page - 1) * itemInt, page * itemInt).map((item) => (
+                    viem.filter((item)=>item.title.toLowerCase().includes(inp.toLowerCase())).slice((page - 1) * itemInt, page * itemInt).map((item) => (
                         <div >
                             <Card item={item} />
                         </div>
