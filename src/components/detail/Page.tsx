@@ -9,9 +9,9 @@ import { RootState } from '../../store';
  
 const Page = () => {
 
-    const { id } = useParams<{ id: string }>()
+    const { id } = useParams()
     const [viem, setViem] = useState<Movie[]>([])
-    const [isSelected, setIsSelected] = useState(false);
+    const [isSelected, setIsSelected] = useState<boolean>(false);
     const [selectedSeats, setSelectedSeats] = useState<Record<string, boolean>>({});
   
       const dispatch = useDispatch()
@@ -77,7 +77,7 @@ const Page = () => {
     //      console.log( String.fromCharCode(97 + rowIndex).toUpperCase() + (seatIndex + 1))
     //  }  //bunu koltukları tıklayınca clg gormek ıcın yaptım
 
-     const tarih = new Date().getDay()+3 >31 ? 31   : new Date().getDay()+3 +  '.' + new Date().getMonth() + '.'+ new Date().getFullYear()
+     const tarih = new Date().getDay()+3 >31 ? 31   : Number(new Date().getDate()) + 3 + '.' + new Date().getMonth() + '.'+ new Date().getFullYear()
     return (
         <div> 
         <div className='mt-6 bg-neutral-300'>

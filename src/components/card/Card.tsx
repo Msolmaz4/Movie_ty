@@ -21,7 +21,7 @@ const Card :FunctionComponent<iProps> = (props) => {
                         `https://image.tmdb.org/t/p/w500${item.poster_path}` 
                     } alt="Bir örnek resim" />
                     <div className="p-4">
-                        <h2 className="text-xl font-semibold"> {item.title}</h2>
+                        <h2 className="text-xl font-semibold"> {item.title.slice(0,35)}</h2>
                         <p className="text-gray-600">{item.overview.slice(0,40)}...</p>
                     </div>
                     <div className="p-4">
