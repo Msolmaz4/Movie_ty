@@ -77,7 +77,7 @@ const Page = () => {
     //      console.log( String.fromCharCode(97 + rowIndex).toUpperCase() + (seatIndex + 1))
     //  }  //bunu koltukları tıklayınca clg gormek ıcın yaptım
 
-
+     const tarih = new Date().getDay()+3 >31 ? 31   : new Date().getDay()+3 +  '.' + new Date().getMonth() + '.'+ new Date().getFullYear()
     return (
         <div> 
         <div className='mt-6 bg-neutral-300'>
@@ -92,8 +92,8 @@ const Page = () => {
                             </div>
                             <div>
                                 <h2>{viem.title}</h2>
-                                <p>adres</p>
-                                <p>tarih</p>
+                                <p>Arabul Sok No:25</p>
+                                <p>{tarih}</p>
                                 <select name="" id="" onChange={(e)=>dispatch(change(e.target.value))} >
                                     <option value="150"> 150 Tam</option>
                                     <option value="100"> 100 Ogrenci</option>
