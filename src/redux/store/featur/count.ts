@@ -19,7 +19,9 @@ export const countSlice = createSlice({
         seatF: (state, action: PayloadAction<string>) => {
             console.log(action.payload)
             state.toplam.push(action.payload)
+           
         }
+    
     }
 })
 

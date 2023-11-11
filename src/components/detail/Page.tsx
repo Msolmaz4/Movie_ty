@@ -3,8 +3,8 @@ import { Movie } from '../../type';
 import axios from 'axios';
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { change ,seatF} from '../../store/featur/count';
-import { RootState } from '../../store';
+import { change ,seatF} from '../../redux/store/featur/count';
+import { RootState } from '../../redux/store';
 
  
 const Page = () => {
