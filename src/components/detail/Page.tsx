@@ -3,20 +3,28 @@ import { Movie } from '../../type';
 import axios from 'axios';
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { change ,seatF} from '../../redux/store/featur/count';
-import { RootState } from '../../redux/store';
+import { addToCart, getcartTotal } from '../../redux/CardSlice/CardSlice';
+
+
+
 
  
 const Page = () => {
 
     const { id } = useParams()
     const [viem, setViem] = useState<Movie[]>([])
-    const [isSelected, setIsSelected] = useState<boolean>(false);
+    const [quanty ,setQuanty] = useState(0)
+    const [price,setPrice] = useState(150)
+    const dispatch = useDispatch()
+    
     const [selectedSeats, setSelectedSeats] = useState<Record<string, boolean>>({});
-  
-      const dispatch = useDispatch()
-      const koltuk = useSelector((state: RootState) => state.counter.toplam)
-      console.log(koltuk)
+
+    const addBasket = (sira:string)=>{
+     dispatch(addToCart({id:sira,quanty:quanty,price:price}))
+    }
+       
+   
+    
 
 
     useEffect(() => {
@@ -70,6 +78,8 @@ const Page = () => {
       const theatreLayout: Seat[][] = createTheatre(numRows, seatsPerRow);
       theatreLayout[3][2] = { ...theatreLayout[3][2], available: false };
       theatreLayout[3][6] = { ...theatreLayout[3][6], available: false };
+
+
       
      
     //   const deger = (rowIndex,seatIndex)=>{
@@ -78,6 +88,13 @@ const Page = () => {
     //  }  //bunu koltukları tıklayınca clg gormek ıcın yaptım
 
      const tarih = new Date().getDay()+3 >31 ? 31   : Number(new Date().getDate()) + 3 + '.' + new Date().getMonth() + '.'+ new Date().getFullYear()
+
+      useEffect(()=>{
+           dispatch(getcartTotal())
+      },[dispatch])
+     const {cards} = useSelector(state => state.card)
+     console.log(cards)
+
     return (
         <div> 
         <div className='mt-6 bg-neutral-300'>
@@ -94,7 +111,7 @@ const Page = () => {
                                 <h2>{viem.title}</h2>
                                 <p>Arabul Sok No:25</p>
                                 <p>{tarih}</p>
-                                <select name="" id="" onChange={(e)=>dispatch(change(e.target.value))} >
+                                <select name="" id="" value={price} onChange={(e)=>setPrice(e.target.value)} >
                                     <option value="150"> 150 Tam</option>
                                     <option value="100"> 100 Ogrenci</option>
                                     <option value="120"> 120 Indirimli</option>
@@ -113,11 +130,7 @@ const Page = () => {
                 <div className=''>
                     <div className='border-dashed border-2 border-sky-500 h-48 m-5 mr-10 rounded-lg flex flex-col justify-center items-center' >
                         <div> 
-                        {
-        koltuk.map((ert, i) => (
-          <span key={i}>{ert}</span>
-        ))
-      }
+       koltuk {quanty}
 
                         </div>
                         <div>aciklama</div>
@@ -156,16 +169,20 @@ const Page = () => {
             seat.available
                 ? selectedSeats[`${rowIndex}-${seatIndex}`] ? 'bg-yellow-500' : 'bg-stone-400'
                 : 'bg-red-500'
-        } flex flex-col justify-center items-center rounded-lg w-1/12`} onClick={() => {
+        } flex flex-col justify-center items-center rounded-lg w-1/12`} 
+         onClick={() => {
             if (seat.available) {
-                const seatKey = `${rowIndex}-${seatIndex}`;
-                setSelectedSeats((prevSelectedSeats) => ({
-                    ...prevSelectedSeats,
-                    [seatKey]: !prevSelectedSeats[seatKey],
-                }));
-                dispatch(seatF(String.fromCharCode(97 + rowIndex).toUpperCase() + (seatIndex + 1)));
-            }
-        }}>
+               const seatKey = `${rowIndex}-${seatIndex}`;
+              setSelectedSeats((prevSelectedSeats) => ({
+                 ...prevSelectedSeats,
+                   [seatKey]: !prevSelectedSeats[seatKey],
+                 }));
+           
+           }
+           return  addBasket(String.fromCharCode(97 + rowIndex).toUpperCase() + (seatIndex + 1))
+
+     }
+        }>
           {String.fromCharCode(97 + rowIndex).toUpperCase() + (seatIndex + 1)}
         </div>
       ))}
