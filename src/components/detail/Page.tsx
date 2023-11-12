@@ -3,7 +3,7 @@ import { Movie } from '../../type';
 import axios from 'axios';
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, getcartTotal } from '../../redux/CardSlice/CardSlice';
+import { addToCart, getcartTotal, removeCard } from '../../redux/CardSlice/CardSlice';
 
 
 
@@ -185,6 +185,7 @@ const Page = () => {
                  ...prevSelectedSeats,
                    [seatKey]: !prevSelectedSeats[seatKey],
                  }));
+           
            
            }
            return  addBasket(String.fromCharCode(97 + rowIndex).toUpperCase() + (seatIndex + 1))

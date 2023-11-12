@@ -12,6 +12,7 @@ interface CartState {
   cards: Card[];
   itemCount: number;
   total: number;
+
  
 }
 
@@ -19,6 +20,7 @@ const initialState: CartState = {
   cards: [],
   itemCount: 0,
   total: 0,
+  
  
 };
 
@@ -29,11 +31,16 @@ const cardSlice = createSlice({
     addToCart: (state, action: PayloadAction<Card>) => {
         const sonDurum = state.cards.find(item=>item.id === action.payload.id)
         if(!sonDurum ){
-            state.cards.push({...action.payload,quanty:1 ,price:action.payload.price,available:action.payload.available})
+            state.cards.push({...action.payload,quanty:1 ,price:action.payload.price,available:!action.payload.available})
+        }else if(sonDurum ){
+          const temCrd= state.cards.filter(item=>item.id !== action.payload.id)
+          state.cards = temCrd
         }
+        
 
     },
     removeCard:(state,action: PayloadAction<Card>)=>{
+      console.log(action.payload)
         const temCrd= state.cards.filter(item=>item.id !== action.payload.id)
         state.cards = temCrd
 
