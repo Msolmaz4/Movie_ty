@@ -20,7 +20,7 @@ const Page = () => {
     const [selectedSeats, setSelectedSeats] = useState<Record<string, boolean>>({});
 
     const addBasket = (sira:string)=>{
-     dispatch(addToCart({id:sira,quanty:quanty,price:price}))
+     dispatch(addToCart({id:sira,quanty:quanty,price:price,available:true}))
     }
        
    
@@ -89,11 +89,10 @@ const Page = () => {
 
      const tarih = new Date().getDay()+3 >31 ? 31   : Number(new Date().getDate()) + 3 + '.' + new Date().getMonth() + '.'+ new Date().getFullYear()
 
-      useEffect(()=>{
-           dispatch(getcartTotal())
-      },[dispatch])
-     const {cards} = useSelector(state => state.card)
-     console.log(cards)
+   
+     const {cards ,itemCount,total} = useSelector(state => state.card)
+     console.log(cards,itemCount ,total)
+     dispatch(getcartTotal())
 
     return (
         <div> 
@@ -112,9 +111,9 @@ const Page = () => {
                                 <p>Arabul Sok No:25</p>
                                 <p>{tarih}</p>
                                 <select name="" id="" value={price} onChange={(e)=>setPrice(e.target.value)} >
-                                    <option value="150"> 150 Tam</option>
-                                    <option value="100"> 100 Ogrenci</option>
-                                    <option value="120"> 120 Indirimli</option>
+                                    <option value="150"> 15 Tam</option>
+                                    <option value="100"> 10 Ogrenci</option>
+                                    <option value="120"> 12 Indirimli</option>
                                 </select>
                             </div>
                         </div>
@@ -129,13 +128,22 @@ const Page = () => {
                 </div>
                 <div className=''>
                     <div className='border-dashed border-2 border-sky-500 h-48 m-5 mr-10 rounded-lg flex flex-col justify-center items-center' >
-                        <div> 
-       koltuk {quanty}
+                        <div>
+                             {
+                            itemCount !== 0 ? (
+                              cards.map((item)=>(
+                                <p>{item.id} {item.price}$</p>
+                              ))
+                            ) : ('') }
+    
 
                         </div>
-                        <div>aciklama</div>
+                       
                         <div className="border-dotted border-b-2 border-gray-400"></div>
-                        <div>fiyat</div>
+                        {
+                            total=== 0 ? <div></div>:<div>{total}$</div>
+                        }
+                        
                         <button className="rounded-full w-48 bg-indigo-500">Odeme</button>
                     </div>
                 </div> 

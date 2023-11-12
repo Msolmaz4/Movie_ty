@@ -5,18 +5,21 @@ interface Card {
   quanty: number;
   price: number;
   totalPrice: number;
+  available:boolean;
 }
 
 interface CartState {
   cards: Card[];
   itemCount: number;
   total: number;
+ 
 }
 
 const initialState: CartState = {
   cards: [],
   itemCount: 0,
-  total: 0
+  total: 0,
+ 
 };
 
 const cardSlice = createSlice({
@@ -25,8 +28,8 @@ const cardSlice = createSlice({
   reducers: {
     addToCart: (state, action: PayloadAction<Card>) => {
         const sonDurum = state.cards.find(item=>item.id === action.payload.id)
-        if(!sonDurum){
-            state.cards.push({...action.payload,quanty:1 ,price:action.payload.price})
+        if(!sonDurum ){
+            state.cards.push({...action.payload,quanty:1 ,price:action.payload.price,available:action.payload.available})
         }
 
     },
@@ -40,7 +43,7 @@ const cardSlice = createSlice({
     },
     getcartTotal :(state)=>{
         state.total = state.cards.reduce((cartTotal,cartItem)=>{
-            return cartTotal += cartItem.totalPrice
+            return cartTotal +=Number(cartItem.price)
         },0)
       state.itemCount = state.cards.length
     }
