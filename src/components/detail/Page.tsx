@@ -1,16 +1,16 @@
-import { useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Movie } from '../../type';
 import axios from 'axios';
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, getcartTotal, removeCard } from '../../redux/CardSlice/CardSlice';
+import { addToCart, getcartTotal ,clearCard} from '../../redux/CardSlice/CardSlice';
 
 
 
 
  
 const Page = () => {
-
+  const navigat= useNavigate()
     const { id } = useParams()
     const [viem, setViem] = useState<Movie[]>([])
     const [quanty ,setQuanty] = useState(0)
@@ -23,7 +23,10 @@ const Page = () => {
      dispatch(addToCart({id:sira,quanty:quanty,price:price,available:true}))
     }
        
-   
+   const clear = ()=>{
+    dispatch(clearCard())
+navigat("/")
+   }
     
 
 
@@ -111,14 +114,14 @@ const Page = () => {
                                 <p>Arabul Sok No:25</p>
                                 <p>{tarih}</p>
                                 <select name="" id="" value={price} onChange={(e)=>setPrice(e.target.value)} >
-                                    <option value="150"> 15 Tam</option>
-                                    <option value="100"> 10 Ogrenci</option>
-                                    <option value="120"> 12 Indirimli</option>
+                                    <option value="150"> 150 Erwachsen</option>
+                                    <option value="100"> 100 Student</option>
+                                    <option value="120"> 120 Ermaßing</option>
                                 </select>
                             </div>
                         </div>
                     ) : (
-                        <div>Film bulunamadı</div>
+                        <div>Leider keine Film </div>
                     )}
                 </div>
                 <div className=' flex justify-center items-center  col-start-2 col-span-4'>
@@ -144,7 +147,8 @@ const Page = () => {
                             total=== 0 ? <div></div>:<div>{total}$</div>
                         }
                         
-                        <button className="rounded-full w-48 bg-indigo-500">Odeme</button>
+                        <button className="rounded-full w-48 bg-cyan-400 mb-2">Einkaufen</button>
+                        <button className="rounded-full w-48 bg-cyan-400" onClick={clear}>Absagen</button>
                     </div>
                 </div> 
     </div>
@@ -201,8 +205,9 @@ const Page = () => {
   
 }
 </div>
-<div>
-    home
+<div className='flex justify-center h-8 w-48 bg-cyan-400 border-white  border-solid border-2 ml-[800px] rounded-lg'>
+    <Link to="/">Home </Link>
+   
 </div>
     </div>
   )
